@@ -15,11 +15,13 @@
 
 from oswin_tempest_plugin import config
 from oswin_tempest_plugin.tests import test_base
+from oswin_tempest_plugin.tests._mixins import migrate
 
 CONF = config.CONF
 
 
-class _BaseDiskTestMixin(test_base.TestBase):
+class _BaseDiskTestMixin(test_base.TestBase,
+                         migrate._BaseMigrateMixin):
 
     _CONF_OPTION_NAME = ''
 

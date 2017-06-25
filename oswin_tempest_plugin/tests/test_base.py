@@ -32,6 +32,8 @@ Server_tuple = collections.namedtuple(
 
 class TestBase(manager.ScenarioTest):
 
+    credentials = ['primary', 'admin']
+
     # Inheriting TestCases should change this version if needed.
     _MIN_HYPERV_VERSION = 6002
 
@@ -54,6 +56,12 @@ class TestBase(manager.ScenarioTest):
                        'config_vers': config_vers,
                        'req_vers': cls._MIN_HYPERV_VERSION})
             raise cls.skipException(msg)
+
+    @classmethod
+    def setup_clients(cls):
+        super(TestBase, cls).setup_clients()
+
+        cls.admin_servers_client = cls.os_admin.servers_client
 
     def _get_image_ref(self):
         return self._IMAGE_REF
