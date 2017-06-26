@@ -16,14 +16,19 @@
 from oswin_tempest_plugin import config
 from oswin_tempest_plugin.tests import test_base
 from oswin_tempest_plugin.tests._mixins import migrate
+from oswin_tempest_plugin.tests._mixins import resize
 
 CONF = config.CONF
 
 
 class _BaseDiskTestMixin(test_base.TestBase,
-                         migrate._BaseMigrateMixin):
+                         migrate._BaseMigrateMixin,
+                         resize._BaseResizeMixin):
 
     _CONF_OPTION_NAME = ''
+
+    _BIGGER_FLAVOR = {'disk': 1}
+    _BAD_FLAVOR = {'disk': -1}
 
     @classmethod
     def skip_checks(cls):
@@ -43,6 +48,7 @@ class VhdDiskTest(_BaseDiskTestMixin):
 
     _IMAGE_REF = CONF.hyperv.vhd_image_ref
     _CONF_OPTION_NAME = 'hyperv.vhd_image_ref'
+    _FLAVOR_SUFFIX = 'vhd'
 
     # TODO(claudiub): validate that the images really are VHD / VHDX.
 
@@ -51,6 +57,7 @@ class VhdxDiskTest(_BaseDiskTestMixin):
 
     _IMAGE_REF = CONF.hyperv.vhdx_image_ref
     _CONF_OPTION_NAME = 'hyperv.vhdx_image_ref'
+    _FLAVOR_SUFFIX = 'vhdx'
 
 
 class Generation2DiskTest(_BaseDiskTestMixin):
@@ -60,6 +67,7 @@ class Generation2DiskTest(_BaseDiskTestMixin):
 
     _IMAGE_REF = CONF.hyperv.gen2_image_ref
     _CONF_OPTION_NAME = 'hyperv.gen2_image_ref'
+    _FLAVOR_SUFFIX = 'gen2'
 
     # TODO(claudiub): Add validation that the given gen2_image_ref really has
     # the 'hw_machine_type=hyperv-gen2' property.

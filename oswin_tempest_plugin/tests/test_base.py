@@ -62,6 +62,8 @@ class TestBase(manager.ScenarioTest):
         super(TestBase, cls).setup_clients()
 
         cls.admin_servers_client = cls.os_admin.servers_client
+        cls.admin_flavors_client = cls.os_admin.flavors_client
+        cls.admin_migrations_client = cls.os_admin.migrations_client
 
     def _get_image_ref(self):
         return self._IMAGE_REF
